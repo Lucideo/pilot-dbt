@@ -1,0 +1,24 @@
+# Virtual environments
+.venv
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Logs (root and dbt_transforming/)
+logs/
+*.log
+
+# dbt build artifacts and installed packages
+dbt_transforming/target/
+dbt_transforming/dbt_packages/
+# per-machine dbt user id (anonymous usage tracking)
+dbt_transforming/.user.yml
+
+# DuckDB databases (rebuilt with `dbt build`)
+*.duckdb
+*.duckdb.wal
+
+# Generated data (recreate with make_raw_data.py and `dbt build`)
+raw_data/*.parquet
+dbt_transforming/output_materialize_external/

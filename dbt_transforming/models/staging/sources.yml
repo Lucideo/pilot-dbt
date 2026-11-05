@@ -1,0 +1,7 @@
+sources:
+  - name: raw_data
+    meta:
+      external_location: "/Users/eva/Documents/project_dbt_pilot/raw_data/{name}.parquet"
+    tables:
+      - name: orders
+      - name: payments

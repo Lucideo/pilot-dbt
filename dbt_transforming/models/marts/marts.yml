@@ -1,0 +1,32 @@
+models:
+  - name: fact_orders
+    description: "Orders with the amount paid."
+    config:
+      tags: ['finance']
+    data_tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "amount >= 0"
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+
+  - name: dim_customers
+    description: "Customers with order totals."
+    config:
+      tags: ['finance']
+
+unit_tests:
+  - name: dim_customers_sums_orders
+    model: dim_customers
+    given:
+      - input: ref('stg_customers')
+        rows:
+          - {customer_id: 1, full_name: "Ana Silva", city: "SP"}
+      - input: ref('fact_orders')
+        rows:
+          - {order_id: 1, customer_id: 1, amount: 10}
+          - {order_id: 2, customer_id: 1, amount: 5}
+    expect:
+      rows:
+        - {customer_id: 1, total_orders: 2, lifetime_value: 15}
